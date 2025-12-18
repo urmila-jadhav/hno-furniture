@@ -101,6 +101,26 @@ public function productDetailsById($id)
     ]);
 }
 
+public function categoryDetails($id)
+{
+    // Fetch clicked category
+    $category = DB::table('products_category')
+        ->where('pid', $id)
+        ->first();
+
+    if (!$category) {
+        abort(404, 'Category not found');
+    }
+
+    // Fetch subcategories (if any)
+    $subcategories = DB::table('products_subcategory')
+        ->where('category_id', $id)
+        ->get();
+
+    return view('category-details', compact('category', 'subcategories'));
+}
+
+
 
 
    

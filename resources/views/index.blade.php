@@ -238,7 +238,7 @@ $(document).ready(function () {
                     cohesive and stunning final result.
                 </p>
 
-                <a href="#" 
+                <a href="about" 
                     class="btn px-4 py-2"
                     style="background-color: #c19a6b; color: #fff; font-size: 18px; border-radius: 8px;">
                         Explore
@@ -258,48 +258,58 @@ $(document).ready(function () {
 
 
 
+
 <div class="row g-4 justify-content-center wow fadeInUp" 
      data-wow-delay="0.3s" 
      style="padding: 73px;">
 
-
     @foreach($categories as $index => $category)
         <div class="col-md-4 col-lg-3 category-item {{ $index >= 4 ? 'd-none extra-category' : '' }}">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                
-                <img src="{{ asset($category->category_image) }}"
-                    class="img-fluid"
-                    alt="{{ $category->category_name }}"
-                    style="height:200px; object-fit:cover;">
+
+      <a href="{{ url('category/'.$category->pid) }}">
+    <img src="{{ asset($category->category_image) }}"
+         class="img-fluid"
+         alt="{{ $category->category_name }}"
+         style="height:200px; object-fit:cover;">
+</a>
+
+
 
                 <div class="card-body text-center py-3">
                     <h6 class="fw-semibold text-uppercase mb-0">
                         {{ $category->category_name }}
                     </h6>
                 </div>
+
             </div>
         </div>
     @endforeach
 
 </div>
 
-<!-- View All Button -->
-<div class="text-center mt-4">
-    <a href="#" id="viewAllBtn" class="btn btn-primary px-4 py-2 rounded-pill">
+
+<!-- View All / View Less Button -->
+<div class="text-center mt-3">
+    <a href="#" id="toggleViewBtn" class="btn btn-primary px-4 py-2 rounded-pill">
         View All
     </a>
 </div>
+
 <script>
-document.getElementById('viewAllBtn').addEventListener('click', function(e) {
+document.getElementById('toggleViewBtn').addEventListener('click', function(e) {
     e.preventDefault();
+    const extraItems = document.querySelectorAll('.extra-category');
+    const btn = document.getElementById('toggleViewBtn');
 
-    // Show hidden categories
-    document.querySelectorAll('.extra-category').forEach(function(item) {
-        item.classList.remove('d-none');
-    });
-
-    // Hide the button once loaded
-    document.getElementById('viewAllBtn').style.display = 'none';
+    if (btn.innerText === 'View All') {
+        extraItems.forEach(item => item.classList.remove('d-none'));
+        btn.innerText = 'View Less';
+    } else {
+        extraItems.forEach(item => item.classList.add('d-none'));
+        btn.innerText = 'View All';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 });
 </script>
 
@@ -308,29 +318,55 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
 
 <!-- ✅ CSS -->
 <style>
+  
+
+
+/* Active category button */
 .category-btn.active {
-  background-color: #c19a6b;
-  color: #fff;
-  border-color: #c19a6b;
+    background-color: #c19a6b;
+    color: #fff;
+    border-color: #c19a6b;
 }
 
+/* Category card container */
 .category-item .card {
-  height: 320px;
+    height: auto;               /* Let content dictate height */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Hover effect on card */
+.category-item .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Category image */
 .category-item img {
-  height: 260px;
-  object-fit: cover;
-  width: 100%;
-  transition: transform 0.4s ease;
+    width: 100%;
+    height: 180px;               /* Reduced height for compact design */
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+    transition: transform 0.4s ease;
+    margin-bottom: 10px;         /* Space between image and text */
 }
 
+/* Hover effect on image */
 .category-item:hover img {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
+/* Category name text */
 .card-body h6 {
-  color: #c19a6b;
+    color: #c19a6b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0;                    /* Remove default margin */
+    padding-bottom: 8px;          /* Space below text */
 }
 
 .btn-primary {
@@ -527,8 +563,6 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
 <img src="{{ asset($firstImage) }}" 
      alt="{{ $product->product_name }}" 
      class="service-img">
-
-
                         <div class="service-content text-center mt-2">
                             <h4>{{ $product->product_name }}</h4>
                             <p class="text-muted">
@@ -657,7 +691,7 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
                     <h6 class="fw-semibold mb-2">HNO Chocolate Study Desk</h6>
                     <div class="text-warning mb-2">★★★★★</div>
                     
-                    <button class="btn btn-outline-dark btn-sm mt-2">Add to Cart</button>
+                    
                 </div>
             </div>
 
@@ -670,7 +704,6 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
                     <h6 class="fw-semibold mb-2">HNO Logan Computer Table</h6>
                     <div class="text-warning mb-2">★★★★★</div>
                     
-                    <button class="btn btn-outline-dark btn-sm mt-2">Add to Cart</button>
                 </div>
             </div>
 
@@ -683,7 +716,6 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
                     <h6 class="fw-semibold mb-2">HNO Oakwood TV Unit</h6>
                     <div class="text-warning mb-2">★★★★★</div>
                    
-                    <button class="btn btn-outline-dark btn-sm mt-2">Add to Cart</button>
                 </div>
             </div>
              <!-- Product 4 -->
@@ -696,7 +728,7 @@ document.getElementById('viewAllBtn').addEventListener('click', function(e) {
                     <h6 class="fw-semibold mb-2">HNO  Wood Coffee Table</h6>
                     <div class="text-warning mb-2">★★★★★</div>
                     
-                    <button class="btn btn-outline-dark btn-sm mt-2">Add to Cart</button>
+   
                 </div>
             </div>
         </div>
@@ -751,7 +783,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">HNO Cotton Printed Mat</h6>
                         
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                      
                     </div>
                 </div>
             </div>
@@ -765,7 +797,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">Handcrafted Wooden Lamp</h6>
                         
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                       
                     </div>
                 </div>
             </div>
@@ -779,7 +811,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">Classic Ceramic Vase</h6>
                         
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                        
                     </div>
                 </div>
             </div>
@@ -793,7 +825,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">Modern Wall Clock</h6>
                         
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                        
                     </div>
                 </div>
             </div>
@@ -807,7 +839,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">Elegant Candle Holder</h6>
                        
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                        
                     </div>
                 </div>
             </div>
@@ -821,7 +853,7 @@ $(document).ready(function(){
                         <span class="badge bg-dark text-white mb-2">New Arrival</span>
                         <h6 class="fw-semibold mb-2">Luxury Crystal Frame</h6>
                         
-                        <button class="btn btn-outline-dark btn-sm">Add to Cart</button>
+                        
                     </div>
                 </div>
             </div>
@@ -1145,106 +1177,6 @@ $(document).ready(function(){
 <!-- Why Choose Us End -->
 
 
-<!-- Project Start ->
-<div class="container-xxl project py-5">
-    <div class="container">
-        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h4 class="section-title">Our Projects</h4>
-            <h1 class="display-5 mb-4">Visit Our Latest Projects And Our Innovative Works</h1>
-        </div>
-        <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="col-lg-4">
-                <div class="nav nav-pills d-flex justify-content-between w-100 h-100 me-4">
-                    <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4 active" data-bs-toggle="pill" data-bs-target="#tab-pane-1" type="button">
-                        <h3 class="m-0">01. Modern Complex</h3>
-                    </button>
-                    <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4" data-bs-toggle="pill" data-bs-target="#tab-pane-2" type="button">
-                        <h3 class="m-0">02. Royal Hotel</h3>
-                    </button>
-                    <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4" data-bs-toggle="pill" data-bs-target="#tab-pane-3" type="button">
-                        <h3 class="m-0">03. Mexwel Buiding</h3>
-                    </button>
-                    <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-0" data-bs-toggle="pill" data-bs-target="#tab-pane-4" type="button">
-                        <h3 class="m-0">04. Shopping Complex</h3>
-                    </button>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="tab-content w-100">
-                    <div class="tab-pane fade show active" id="tab-pane-1">
-                        <div class="row g-4">
-                            <div class="col-md-6" style="min-height: 350px;">
-                                <div class="position-relative h-100">
-                                    <img class="position-absolute img-fluid w-100 h-100" src="{{ asset('assets/img/project-lg-1.jpg') }}" style="object-fit: cover;" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit...</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                <a href="#" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="tab-pane-2">
-                        <div class="row g-4">
-                            <div class="col-md-6" style="min-height: 350px;">
-                                <div class="position-relative h-100">
-                                    <img class="position-absolute img-fluid w-100 h-100" src="{{ asset('assets/img/project-lg-2.jpg') }}" style="object-fit: cover;" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit...</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                <a href="#" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="tab-pane-3">
-                        <div class="row g-4">
-                            <div class="col-md-6" style="min-height: 350px;">
-                                <div class="position-relative h-100">
-                                    <img class="position-absolute img-fluid w-100 h-100" src="{{ asset('assets/img/project-lg-3.jpg') }}" style="object-fit: cover;" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit...</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                <a href="#" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="tab-pane-4">
-                        <div class="row g-4">
-                            <div class="col-md-6" style="min-height: 350px;">
-                                <div class="position-relative h-100">
-                                    <img class="position-absolute img-fluid w-100 h-100" src="{{ asset('assets/img/project-lg-4.jpg') }}" style="object-fit: cover;" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit...</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                <a href="#" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-
-    <!- Project End -->
 
     <!-- Team Start -->
 <div class="container-xxl py-5">
@@ -1448,7 +1380,7 @@ $('.testimonial-carousel').owlCarousel({
                             <!--<div class="breadcrumb-item"><a href="#">Admin</a></div>-->
                         </div>
                         <a href="#" class="d-block h3 mb-4">We have 25 years of experience in this industry</a>
-                        <a href="#" class="btn btn-sm btn-outline-body px-3">Read More</a>
+                       
                     </div>
                 </div>
             </div>
@@ -1463,7 +1395,7 @@ $('.testimonial-carousel').owlCarousel({
                             
                         </div>
                         <a href="#" class="d-block h3 mb-4">We have 25 years of experience in this industry</a>
-                        <a href="#" class="btn btn-sm btn-outline-body px-3">Read More</a>
+                        
                     </div>
                 </div>
             </div>
@@ -1477,7 +1409,7 @@ $('.testimonial-carousel').owlCarousel({
                             <div class="breadcrumb-item"><a href="#">01 Jan, 2045</a></div>
                         </div>
                         <a href="#" class="d-block h3 mb-4">We have 25 years of experience in this industry</a>
-                        <a href="#" class="btn btn-sm btn-outline-body px-3">Read More</a>
+                        
                     </div>
                 </div>
             </div>
