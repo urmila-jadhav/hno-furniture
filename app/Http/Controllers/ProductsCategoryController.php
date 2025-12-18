@@ -8,6 +8,33 @@ use Illuminate\Support\Facades\File;
 
 class ProductsCategoryController extends Controller
 {
+
+    public function categoryDetails($id)
+{
+    // Fetch category
+    $category = DB::table('products_category')
+        ->where('pid', $id)
+        ->first();
+
+    if (!$category) {
+        abort(404);
+    }
+
+    // ✅ FIXED: use pid (category id)
+    $subcategories = DB::table('products_subcategory')
+        ->where('pid', $id)
+        ->get();
+
+    // All categories (for related links)
+    $categories = DB::table('products_category')->get();
+
+    return view('categorydetails', compact(
+        'category',
+        'subcategories',
+        'categories'
+    ));
+}
+
     public function index()
     {
         $categories = DB::table('products_category')

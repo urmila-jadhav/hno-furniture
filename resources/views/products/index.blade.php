@@ -1,6 +1,5 @@
 @extends('admin.layouts.header')
 @section('title', 'Manage Products')
-
 @section('content')
 <div class="container mt-4">
      <nav aria-label="breadcrumb">

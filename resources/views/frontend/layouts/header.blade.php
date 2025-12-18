@@ -80,22 +80,13 @@
                 <!-- <li class="nav-item">
                         <a href="{{ url('/projects') }}" class="nav-link {{ Request::is('project') ? 'active' : '' }}"> our projects</a>
                 </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Request::is('projects*') ? 'active' : '' }}" 
-                    href="#" 
-                    id="projectsDropdown" 
-                    role="button" 
-                    data-bs-toggle="dropdown" 
-                    aria-expanded="false">
-                        Our Projects
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
-                        <li><a class="dropdown-item" href="{{ url('/projects') }}">All</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/kitchen') }}">Kitchens</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/projects/wardrobe') }}">Wardrobe</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/projects/full-home-modular') }}">Full Home Modular</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item">
+    <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}" 
+       href="{{ url('/projects') }}">
+        Our Products
+    </a>
+</li>
+
 
                 <!--✅ NORMAL DROPDOWN 1 -->
                 <!-- <li class="nav-item dropdown">
@@ -113,10 +104,10 @@
                     </ul>
                 </li> -->
                 <!-- ✅ NORMAL DROPDOWN 2 -->
-                 <li class="nav-item">
+                 {{-- <li class="nav-item">
                     <a href="{{ url('/services') }}" class="nav-link {{ Request::is('services') ? 'active' : '' }}">Our Services</a>
                 </li>
-          
+           --}}
                 <li class="nav-item">
                     <a href="{{ url('/contact') }}" class="nav-link {{ Request::is('contact') ? 'active' : '' }}">Contact Us</a>
                 </li>

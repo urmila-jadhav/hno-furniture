@@ -30,7 +30,8 @@ use App\Http\Controllers\AI2DInteriorController;
 Route::get('/ai-2d-designer', [AI2DInteriorController::class, 'form'])->name('ai.2d.form');
 Route::post('/ai-2d-designer/generate', [AI2DInteriorController::class, 'generate'])->name('ai.2d.generate');
 Route::get('/ai-2d-designer/result', [AI2DInteriorController::class, 'result'])->name('ai.2d.result');
-
+Route::get('/category/{id}', [ProductsCategoryController::class, 'categoryDetails'])
+     ->name('category.details');;
 // Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
@@ -48,6 +49,9 @@ Route::get('/projects', function () {
 Route::get('/project/details', function () {
     return view('projectdetails');
 });
+
+
+// Route::get('/category/{pid}', [FrontendController::class, 'categoryDetailsById'])->name('category.details');
 
 Route::get('/product/{id}', [FrontendController::class, 'productDetailsById'])
      ->name('product.details');
